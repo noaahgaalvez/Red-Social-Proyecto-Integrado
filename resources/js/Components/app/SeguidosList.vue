@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue';
 import TextInput from '@/Components/TextInput.vue';
-import FollowingItem from '@/Components/app/FollowingItem.vue';
+import SeguidosItem from '@/Components/app/SeguidosItem.vue';
 
 const searchKeyword = ref('');
 
@@ -17,7 +17,7 @@ const searchKeyword = ref('');
 				Aún no tienes Amigos...
 			</div>
 			<div v-else>
-				<FollowingItem image="https://picsum.photos/50"
+				<SeguidosItem image="https://picsum.photos/50"
 							name="Noah Gálvez" />
 			</div>
 		</div>

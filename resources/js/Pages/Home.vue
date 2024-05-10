@@ -1,6 +1,8 @@
 <script setup>
-import FollowingList from '@/Components/app/FollowingList.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import SeguidosList from '@/Components/app/SeguidosList.vue';
+import CreatePublicacion from '@/Components/app/CreatePublicacion.vue';
+import PublicacionList from '@/Components/app/PublicacionList.vue';
 
 defineProps({
     
@@ -19,11 +21,12 @@ function handleImageError() {
     
     <div class="grid grid-cols-9 gap-3">
         <div class="col-span-6">
-            
+            <CreatePublicacion />
+            <PublicacionList />
         </div>
 
         <div class="col-span-3 py-6">
-            <FollowingList />
+            <SeguidosList />
         </div>
     </div>
 </template>
