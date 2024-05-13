@@ -54,7 +54,7 @@ const publicacion2 = {
 </script>
 
 <template>
-	<div>
+	<div class="overflow-auto">
 		<PublicacionItem :publicacion="publicacion1" />
 		<PublicacionItem :publicacion="publicacion2" />
 	</div>

@@ -5,8 +5,8 @@ const crearPublicacion = ref(false);
 </script>
 
 <template>
-    <div class="p-4">
-        <div @click="crearPublicacion = true" class="py-3 px-2 text-gray-500 text-sm text-center border border-gray-300 rounded-md mb-3 bg-indigo-600 text-white cursor-pointer">
+    <div class="p-4 bg-white shadow rounded-md mb-3">
+        <div @click="crearPublicacion = true" class="py-3 px-2 text-gray-500 text-sm text-center border border-gray-300 rounded-md bg-indigo-600 text-white cursor-pointer">
             Pulsa aquí para crear una publicación
         </div>
         <div v-if="crearPublicacion" class="flex gap-2 justify-between">
