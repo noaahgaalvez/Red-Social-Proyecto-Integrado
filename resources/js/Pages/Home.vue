@@ -20,7 +20,7 @@ function handleImageError() {
 <template>
     <Head title="StalkMe" />
 
-    
+    <AuthenticatedLayout>
     <div class="grid lg:grid-cols-12 gap-3 p-4 h-full">
         <div class="lg:col-span-3 lg:order-2 h-full overflow-hidden">
             <SeguidosList />
@@ -31,6 +31,7 @@ function handleImageError() {
             <PublicacionList />
         </div>
     </div>
+    </AuthenticatedLayout>
 </template>
 
 <style>
