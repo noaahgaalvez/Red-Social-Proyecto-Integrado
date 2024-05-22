@@ -2,10 +2,12 @@
   <AuthenticatedLayout>
     <div class="container mx-auto h-full overflow-auto">
       <div class="group relative bg-white">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgTK5rMT1U1VzAVpuhz6z2krX_hYLUwik0VTTEmFPEPw&s" 
+        <img src="" 
           class=" w-full h-[200px] object-cover">
         <button class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100">
           Actualizar portada
+          <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0 cursor-pointer"
+                @change="actualizarPortada" />
         </button>
         <div class="flex">
           <img src="https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" 
@@ -94,7 +96,20 @@
     }
   });
 
-  const user = usePage().props.auth.user;
+  const imgPortadaSrc = ref('');
+
+  function actualizarPortada(e) {
+    console.log(e);
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imgPortadaSrc.value = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  }
   
   </script>
   
