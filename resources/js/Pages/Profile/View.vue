@@ -1,8 +1,18 @@
 <template>
   <AuthenticatedLayout>
     <div class="container mx-auto h-full overflow-auto">
-      <div class="group relative bg-white">
-        <img src="" 
+
+      <div v-show="showNotification && status === 'imagen-portada-actualizada'" 
+        class="my-2 py-2 px-3 font-medium text-sm bg-blue-600 text-white">
+        Imagen de portada actualizada
+      </div>
+      <div v-if="errors.portada"  
+        class="my-2 py-2 px-3 font-medium text-sm bg-red-500 text-white">
+        {{ errors.portada }}
+      </div>
+
+      <div class="group relative bg-white"> 
+        <img :src="imgPortadaSrc || user.cover_url || '/img/default_PortadaUsuario.jpg'"
           class=" w-full h-[200px] object-cover">
         <button class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100">
           Actualizar portada
@@ -79,12 +89,19 @@
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   import TabItem from '@/Components/TabItem.vue';
   import Edit from '@/Pages/Profile/Edit.vue';
+  import { useForm } from '@inertiajs/vue3';
+
+  const imagesForm = useForm({
+    portada : null,
+    perfil : null
+  });
 
   const authUser = usePage().props.auth.user;
-
+  const showNotification = ref(true);
   const isMyProfile = computed(() => authUser && authUser.id === props.user.id);
 
   const props = defineProps({
+    errors: Object,
     mustVerifyEmail: {
         type: Boolean,
     },
@@ -99,15 +116,24 @@
   const imgPortadaSrc = ref('');
 
   function actualizarPortada(e) {
-    console.log(e);
-    const file = e.target.files[0];
+    imagesForm.portada = e.target.files[0];
 
-    if (file) {
+    if (imagesForm.portada) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        imgPortadaSrc.value = e.target.result;
+        imgPortadaSrc.value = reader.result;
       }
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(imagesForm.portada);
+
+      imagesForm.post(route('profile.actualizarImagen'), {
+        onSuccess: () => {
+          showNotification.value = true;
+          setTimeout(() => {
+            showNotification.value = false;
+          }, 3000);
+
+        }
+      });
     }
   }
   

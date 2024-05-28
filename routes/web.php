@@ -13,3 +13,8 @@ require __DIR__.'/auth.php';
 Route::get('/', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/{user:username}', [ProfileController::class, 'index'])->name('profile');
+
+Route::middleware('auth')->group(function () {
+	Route::post('/profile/actualizarImagen', [ProfileController::class, 'actualizarImagen'])
+		->name('profile.actualizarImagen');
+});
