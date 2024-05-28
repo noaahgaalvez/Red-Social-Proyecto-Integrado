@@ -2,21 +2,13 @@
   <AuthenticatedLayout>
     <div class="container mx-auto h-full overflow-auto">
 
-      <div v-show="showNotification && status === 'imagen-portada-actualizada'" 
-        class="my-2 py-2 px-3 font-medium text-sm bg-blue-600 text-white">
-        Imagen de portada actualizada
+      <div v-show="showNotification && props.success"
+          class="my-2 py-2 px-3 font-medium text-sm bg-emerald-500 text-white">
+          {{ success }}
       </div>
-      <div v-if="errors.portada"  
-        class="my-2 py-2 px-3 font-medium text-sm bg-red-500 text-white">
-        {{ errors.portada }}
-      </div>
-      <div v-show="showNotification && status === 'imagen-perfil-actualizada'" 
-        class="my-2 py-2 px-3 font-medium text-sm bg-blue-600 text-white">
-        Imagen de perfil actualizada
-      </div>
-      <div v-if="errors.imagenPerfil"  
-        class="my-2 py-2 px-3 font-medium text-sm bg-red-500 text-white">
-        {{ errors.imagenPerfil }}
+      <div v-if="errors.cover"
+          class="my-2 py-2 px-3 font-medium text-sm bg-red-400 text-white">
+          {{ errors.cover }}
       </div>
 
       <div class="group relative bg-white"> 
@@ -45,9 +37,6 @@
         <div class="py-16 sm:px-0">
           <TabGroup>
             <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
-              <Tab v-if="isMyProfile" v-slot="{ selected }" as="template" >
-                <TabItem :selected="selected" text="Perfil" />
-              </Tab>
               <Tab v-slot="{ selected }" as="template">
                 <TabItem :selected="selected" text="Publicaciones" />
               </Tab>
@@ -57,18 +46,14 @@
               <Tab v-slot="{ selected }" as="template">
                 <TabItem :selected="selected" text="Siguiendo" />
               </Tab>
+              <Tab v-if="isMyProfile" v-slot="{ selected }" as="template" >
+                <TabItem :selected="selected" text="Editar Perfil" />
+              </Tab>
             </TabList>
       
             <TabPanels class="mt-2">
-              <TabPanel v-if="isMyProfile"
-                :class="[
-                  'rounded-xl bg-white p-3 shadow',
-                  'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                ]">
-                <Edit :must-verify-email="mustVerifyEmail" :status="status" />
-              </TabPanel>
               <TabPanel
-                :class="[
+              :class="[
                   'rounded-xl bg-white p-3 shadow',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
@@ -82,13 +67,20 @@
                 Seguidores
               </TabPanel>
               <TabPanel
-                :class="[
+              :class="[
                   'rounded-xl bg-white p-3 shadow',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
                 Seguidos
               </TabPanel>
             </TabPanels>
+            <TabPanel v-if="isMyProfile"
+              :class="[
+                'rounded-xl bg-white p-3 shadow',
+                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+              ]">
+              <Edit :must-verify-email="mustVerifyEmail" :status="status" />
+            </TabPanel>
           </TabGroup>
         </div>
     </div>
@@ -117,6 +109,9 @@
     errors: Object,
     mustVerifyEmail: {
         type: Boolean,
+    },
+    success: {
+        type: String,
     },
     status: {
         type: String,

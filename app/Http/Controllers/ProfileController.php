@@ -22,6 +22,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/View', [
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
+            'success' => session('success'),
             'user' => new UserResource($user),
         ]);
     }
@@ -40,7 +41,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return to_route('profile', $request->user())->with('success', 'Los datos de tu perfil han sido actualiazados.');
     }
 
     /**
@@ -84,7 +85,7 @@ class ProfileController extends Controller
             }
             $path = $portada->store('user-' . $user->id, 'public');
             $user->update(['cover_path' => $path]);
-            $success = 'imagen-portada-actualizada';
+            $success = 'Tu imagen de portada ha sido actualizada';
         }
 
         if ($imagenPerfil) {
@@ -93,10 +94,9 @@ class ProfileController extends Controller
             }
             $path = $imagenPerfil->store('user-' . $user->id, 'public');
             $user->update(['avatar_path' => $path]);
-            $success = 'imagen-perfil-actualizada';
+            $success = 'Tu imagen de perfil ha sido actualizada';
         }
 
-
-        return back()->with('status', $success);
+        return back()->with('success', $success);
     }
 }
