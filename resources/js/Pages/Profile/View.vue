@@ -10,6 +10,14 @@
         class="my-2 py-2 px-3 font-medium text-sm bg-red-500 text-white">
         {{ errors.portada }}
       </div>
+      <div v-show="showNotification && status === 'imagen-perfil-actualizada'" 
+        class="my-2 py-2 px-3 font-medium text-sm bg-blue-600 text-white">
+        Imagen de perfil actualizada
+      </div>
+      <div v-if="errors.imagenPerfil"  
+        class="my-2 py-2 px-3 font-medium text-sm bg-red-500 text-white">
+        {{ errors.imagenPerfil }}
+      </div>
 
       <div class="group relative bg-white"> 
         <img :src="imgPortadaSrc || user.cover_url || '/img/default_PortadaUsuario.jpg'"
@@ -20,12 +28,17 @@
                 @change="actualizarPortada" />
         </button>
         <div class="flex">
-          <img src="https://png.pngtree.com/png-vector/20191101/ourmid/pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg" 
+          <img :src="imgPerfilSrc || user.avatar_url || '/img/default_PerfilUsuario.jpg'"
               class="ml-[48px] w-[128px] h-[128px] -mt-[64px] rounded-full">
-          <div class="flex-1 p-4 flex justify-between items-center">
+          <div class="relative flex-1 p-4 flex justify-between items-center relative">
               <h1 class="text-2xl font-bold">
                 {{ props.user.name }}
               </h1>
+              <button class="absolute bg-blue-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100 absolute right-4">
+                Actualizar foto de perfil
+                <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0 cursor-pointer"
+                      @change="actualizarImagenPerfil" />
+              </button>
           </div>
         </div>
       </div>
@@ -93,7 +106,7 @@
 
   const imagesForm = useForm({
     portada : null,
-    perfil : null
+    imagenPerfil : null
   });
 
   const authUser = usePage().props.auth.user;
@@ -114,6 +127,7 @@
   });
 
   const imgPortadaSrc = ref('');
+  const imgPerfilSrc = ref('');
 
   function actualizarPortada(e) {
     imagesForm.portada = e.target.files[0];
@@ -124,6 +138,28 @@
         imgPortadaSrc.value = reader.result;
       }
       reader.readAsDataURL(imagesForm.portada);
+
+      imagesForm.post(route('profile.actualizarImagen'), {
+        onSuccess: () => {
+          showNotification.value = true;
+          setTimeout(() => {
+            showNotification.value = false;
+          }, 3000);
+
+        }
+      });
+    }
+  }
+
+  function actualizarImagenPerfil(e) {
+    imagesForm.imagenPerfil = e.target.files[0];
+
+    if (imagesForm.imagenPerfil) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imgPerfilSrc.value = reader.result;
+      }
+      reader.readAsDataURL(imagesForm.imagenPerfil);
 
       imagesForm.post(route('profile.actualizarImagen'), {
         onSuccess: () => {

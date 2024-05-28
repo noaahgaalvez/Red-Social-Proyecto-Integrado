@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -67,21 +68,35 @@ class ProfileController extends Controller
     {
         $data = $request->validate([
             'portada' => ['image', 'nullable'],
-            'perfil' => ['image', 'nullable']
+            'imagenPerfil' => ['image', 'nullable']
         ]);
 
         $user = $request->user();
 
         $portada = $data['portada'] ?? null;
-        $perfil = $data['perfil'] ?? null;
+        $imagenPerfil = $data['imagenPerfil'] ?? null;
+
+        $success = '';
 
         if ($portada) {
-            $path = $portada->store('portadas/' . $user->id, 'public');
+            if ($user->cover_path) {
+                Storage::disk('public')->delete($user->cover_path);
+            }
+            $path = $portada->store('user-' . $user->id, 'public');
             $user->update(['cover_path' => $path]);
+            $success = 'imagen-portada-actualizada';
         }
 
-        session('success', 'Imagen actualizada correctamente');
+        if ($imagenPerfil) {
+            if ($user->avatar_path) {
+                Storage::disk('public')->delete($user->avatar_path);
+            }
+            $path = $imagenPerfil->store('user-' . $user->id, 'public');
+            $user->update(['avatar_path' => $path]);
+            $success = 'imagen-perfil-actualizada';
+        }
 
-        return back()->with('status', 'imagen-portada-actualizada');
+
+        return back()->with('status', $success);
     }
 }
