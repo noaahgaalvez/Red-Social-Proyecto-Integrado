@@ -6,7 +6,7 @@ import PublicacionList from '@/Components/app/PublicacionList.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 defineProps({
-    
+    posts: Object,
 });
 
 </script>
@@ -15,16 +15,16 @@ defineProps({
     <Head title="StalkMe" />
 
     <AuthenticatedLayout>
-    <div class="grid lg:grid-cols-12 gap-3 p-4 h-full">
-        <div class="lg:col-span-3 lg:order-2 h-full overflow-hidden">
-            <SeguidosList />
-        </div>
+        <div class="grid lg:grid-cols-12 gap-3 p-4 h-full">
+            <div class="lg:col-span-3 lg:order-2 h-full overflow-hidden">
+                <SeguidosList />
+            </div>
 
-        <div class="lg:col-span-9 lg:order-1 h-full overflow-hidden"> 
-            <CreatePublicacion />
-            <PublicacionList />
+            <div class="lg:col-span-9 lg:order-1 h-full overflow-hidden"> 
+                <CreatePublicacion />
+                <PublicacionList :posts="posts.data" />
+            </div>
         </div>
-    </div>
     </AuthenticatedLayout>
 </template>
 

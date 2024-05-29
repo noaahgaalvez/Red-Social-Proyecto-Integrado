@@ -1,6 +1,10 @@
 <script setup>
 import PublicacionItem from '@/Components/app/PublicacionItem.vue';
 
+defineProps({
+	posts: Array,
+});
+
 const publicacion1 = {
 	usuario: {
 		id: 1,
@@ -55,7 +59,6 @@ const publicacion2 = {
 
 <template>
 	<div class="overflow-auto">
-		<PublicacionItem :publicacion="publicacion1" />
-		<PublicacionItem :publicacion="publicacion2" />
+		<PublicacionItem v-for="post of posts" :key="post.id" :publicacion="post" />
 	</div>
 </template>

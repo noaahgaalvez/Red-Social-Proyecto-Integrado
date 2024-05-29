@@ -16,12 +16,12 @@
         <!-- Usuario -->
         <div class="flex items-center gap-2">
             <a href="javascript:void(0)">
-                <img :src="publicacion.usuario.avatar" class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500" />
+                <img :src="publicacion.user.avatar_url" class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500" />
             </a>
             <div>
                 <h4 class="font-bold">
                     <a href="javascript:void(0)" class="hover:underline">
-                        {{ publicacion.usuario.nombre }}
+                        {{ publicacion.user.name }}
                     </a>
                 </h4>
             </div>
@@ -30,14 +30,16 @@
         <div class="mb-2">
             <Disclosure v-slot="{ open }">
                 <div v-if="!open" v-html="publicacion.body.substring(0, 200)" />
-                <DisclosurePanel>
-                    <div v-html="publicacion.body" />
-                </DisclosurePanel>
-                <div class="flex justify-end">
-                    <DisclosureButton class="text-gray-400 hover:text-blue-500 cursor-pointer">
-                        {{ open ? 'Ocultar' : 'Leer más' }}
-                    </DisclosureButton>
-                </div>
+                <template v-if="publicacion.body.length > 200">
+                    <DisclosurePanel>
+                        <div v-html="publicacion.body" />
+                    </DisclosurePanel>
+                    <div class="flex justify-end">
+                        <DisclosureButton class="text-gray-400 hover:text-blue-500 cursor-pointer">
+                            {{ open ? 'Ocultar' : 'Leer más' }}
+                        </DisclosureButton>
+                    </div>
+                </template>
             </Disclosure>
         </div>
         <!-- Archivos Adjuntos -->
