@@ -21,7 +21,7 @@
         </button>
         <div class="flex">
           <img :src="imgPerfilSrc || user.avatar_url !== '/storage/' ? user.avatar_url : '/img/default_PerfilUsuario.jpg'"
-              class="ml-[48px] w-[128px] h-[128px] -mt-[64px] rounded-full">
+              class="ml-[48px] w-[128px] h-[128px] -mt-[64px] rounded-full aspect-square object-cover">
           <div class="relative flex-1 p-4 flex justify-between items-center relative">
               <h1 class="text-2xl font-bold">
                 {{ props.user.name }}

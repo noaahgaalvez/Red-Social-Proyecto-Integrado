@@ -33,7 +33,7 @@
             <div class="flex items-center gap-2">
                 <a :href="route('profile', publicacion.user.username)">
                     <img :src="publicacion.user.avatar_url !== '/storage/' ? publicacion.user.avatar_url : '/img/default_PerfilUsuario.jpg'"
-                    class="w-[40px] rounded-full border border-2 transition-all hover:border-blue-500" />
+                    class="w-[40px] rounded-full border border-2 transition-all hover:border-blue-500 aspect-square object-cover" />
                 </a>
                 <div>
                     <h4 class="font-bold">
@@ -90,13 +90,6 @@
             <template v-for="attachment in publicacion.attachments">
                
                 <div class="group bg-gray-200 aspect-square flex items-center justify-center text-gray-600 relative">
-                    <!-- Descargar
-                    <button class="opacity-0 group-hover:opacity-100 transition-all w-6 h-6 flex items-center justify-center text-white bg-gray-700 rounded absolute right-2 bottom-2 text-gray-400 cursor-pointer hover:bg-gray-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                        </svg>
-                    </button> -->
-
                     <img v-if="esImagen(attachment)" :src="attachment.path" class="object-cover aspect-square" />
                     <template v-else>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-15 h-16">
