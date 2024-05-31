@@ -31,13 +31,14 @@
         <!-- Usuario -->
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <a href="javascript:void(0)">
+                <a :href="route('profile', publicacion.user.username)">
                     <img :src="publicacion.user.avatar_url !== '/storage/' ? publicacion.user.avatar_url : '/img/default_PerfilUsuario.jpg'"
-                    class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500" />
+                    class="w-[40px] rounded-full border border-2 transition-all hover:border-blue-500" />
                 </a>
                 <div>
                     <h4 class="font-bold">
-                        <a href="javascript:void(0)" class="hover:underline">
+                        <a :href="route('profile', publicacion.user.username)"
+                        class="hover:underline">
                             {{ publicacion.user.name }}
                         </a>
                     </h4>
