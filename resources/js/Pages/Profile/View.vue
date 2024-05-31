@@ -12,7 +12,7 @@
       </div>
 
       <div class="group relative bg-white"> 
-        <img :src="imgPortadaSrc || user.cover_url || '/img/default_PortadaUsuario.jpg'"
+        <img :src="imgPortadaSrc || user.cover_url !== '/storage/' ? user.cover_url : '/img/default_PortadaUsuario.jpg'"
           class=" w-full h-[200px] object-cover">
         <button class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100">
           Actualizar portada
@@ -20,7 +20,7 @@
                 @change="actualizarPortada" />
         </button>
         <div class="flex">
-          <img :src="imgPerfilSrc || user.avatar_url || '/img/default_PerfilUsuario.jpg'"
+          <img :src="imgPerfilSrc || user.avatar_url !== '/storage/' ? user.avatar_url : '/img/default_PerfilUsuario.jpg'"
               class="ml-[48px] w-[128px] h-[128px] -mt-[64px] rounded-full">
           <div class="relative flex-1 p-4 flex justify-between items-center relative">
               <h1 class="text-2xl font-bold">

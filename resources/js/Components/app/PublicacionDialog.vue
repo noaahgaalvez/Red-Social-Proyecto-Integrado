@@ -41,7 +41,8 @@
 					</DialogTitle>
 					<div class="flex items-center gap-2 mt-4 mb-6">
 						<a href="javascript:void(0)">
-							<img :src="publicacion.user.avatar_url" class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500" />
+							<img :src="publicacion.user.avatar_url !== '/storage/' ? publicacion.user.avatar_url : '/img/default_PerfilUsuario.jpg'" 
+							class="w-[40px] rounded-full border-2 transition-all hover:border-blue-500" />
 						</a>
 						<div>
 							<h4 class="font-bold">
@@ -116,6 +117,7 @@ import { useForm } from '@inertiajs/vue3';
 	})
 
 	form.put(route('post.update', props.publicacion), {
+		preserveScroll: true,
 		onSuccess: () => {
 			show.value = false
 		}

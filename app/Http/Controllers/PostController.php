@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -66,8 +67,14 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Publicacion $publicacion)
+    public function destroy(Publicacion $post)
     {
-        //
+        $id = Auth::id();
+
+        if ($post->user_id === $id) {
+            $post->delete();
+        }
+
+        return back();
     }
 }

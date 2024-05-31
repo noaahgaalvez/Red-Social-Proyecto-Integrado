@@ -24,4 +24,5 @@ Route::middleware('auth')->group(function () {
 
 	Route::post('/post', [PostController::class, 'store'])->name('post.create');
 	Route::put('/{post}', [PostController::class, 'update'])->name('post.update');
+	Route::delete('/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 });
