@@ -71,7 +71,7 @@
         </div>
         <!-- Contenido -->
         <div>
-            <Disclosure v-slot="{ open }">
+            <Disclosure v-slot="{ open }" v-if="publicacion.body">
                 <div v-if="!open" v-html="publicacion.body.substring(0, 200)" />
                 <template v-if="publicacion.body.length > 200">
                     <DisclosurePanel>
