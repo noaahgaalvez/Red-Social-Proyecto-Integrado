@@ -141,7 +141,7 @@
 		attachments: [],
 	})
 	
-	form.attachments = archivosAdjuntos.value.map((attachment) => attachment.file)
+	form.attachments = archivosAdjuntos.value.map(myFile => myFile.file)
 	form.put(route('post.update', props.publicacion), {
 		preserveScroll: true,
 		onSuccess: () => {

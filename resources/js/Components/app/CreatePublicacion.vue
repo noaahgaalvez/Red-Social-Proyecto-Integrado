@@ -16,11 +16,17 @@ const archivosAdjuntos = ref([]);
 function submit() {
     nuevaPublicacionForm.attachments = archivosAdjuntos.value.map(myFile => myFile.file)
     nuevaPublicacionForm.post(route('post.create'), {
+		preserveScroll: true,
         onSuccess: () => {
-            crearPublicacion.value = false;
-            nuevaPublicacionForm.reset();
+            resetForm();
         },
     });
+}
+
+function resetForm() {
+	nuevaPublicacionForm.reset();
+	archivosAdjuntos.value = [];
+	crearPublicacion.value = false;
 }
 
 function esImagen(attachment) {
@@ -29,7 +35,6 @@ function esImagen(attachment) {
   }
 
   async function subirArchivo($event) {
-	console.log($event.target.files)
 	for (const file of $event.target.files) {
 		const myFile = {
 			file,
@@ -39,7 +44,6 @@ function esImagen(attachment) {
 		archivosAdjuntos.value.push(myFile)
 	}
     $event.target.value = null
-	console.log(archivosAdjuntos.value)
   }
 
   async function readFile(file) {
