@@ -63,6 +63,7 @@ class PostController extends Controller
                 Storage::disk('public')->delete($path);
             }
             DB::rollBack();
+            throw $e;
         }
 
         return back();
@@ -89,7 +90,48 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Publicacion $post)
     {
-        $post->update($request->validated());
+        $user = $request->user();
+        
+        DB::beginTransaction();
+        $allAttachmentsPaths = [];
+        try {
+            $data = $request->validated();
+            $post->update($data);
+
+            $deletedAttachments = $data['deleteAttachments'] ?? [];
+    
+            $filesDeleted = AdjuntoPublicacion::query()
+                ->where('publicacion_id', $post->id)
+                ->whereIn('id', $deletedAttachments)
+                ->get();
+
+            foreach ($filesDeleted as $file) {
+                $file->delete();
+            }
+
+            $attachments = $data['attachments'] ?? [];
+            foreach ($attachments as $attachment) {
+                $path = $attachment->store('attachments/' . $post->id, 'public');
+                $allAttachmentsPaths[] = $path;
+                AdjuntoPublicacion::create([
+                    'publicacion_id' => $post->id,
+                    'name' => $attachment->getClientOriginalName(),
+                    'path' => $path,
+                    'image' => $attachment->getMimeType(),
+                    'tamanio' => $attachment->getSize(),
+                    'created_by' => $user->id,
+                ]);
+            }
+            
+            DB::commit();
+        } catch (\Exception $e) {
+            foreach ($allAttachmentsPaths as $path) {
+                Storage::disk('public')->delete($path);
+            }
+            DB::rollBack();
+            throw $e;
+        }
+
         return back();
     }
 

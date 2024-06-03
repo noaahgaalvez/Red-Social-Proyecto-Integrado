@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class AdjuntoPublicacion extends Model
 {
@@ -19,4 +20,13 @@ class AdjuntoPublicacion extends Model
         'tamanio',
         'created_by',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function (self $adjuntoPublicacion) {
+            Storage::disk('public')->delete($adjuntoPublicacion->path);
+        });
+    }
 }

@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div>
-                <Menu as="div" class="relative">
+                <Menu as="div" class="relative z-10">
                     <MenuButton as="button" class="text-gray-400 hover:text-blue-500">
                         <ChevronDownIcon class="w-6 h-6" />
                     </MenuButton>

@@ -30,9 +30,9 @@ function resetForm() {
 }
 
 function esImagen(attachment) {
-	let type = attachment.type || attachment.url
-	return type.includes('image')
-  }
+        let type = attachment.type || attachment.image || attachment.url;
+        return type.includes('image');
+    }
 
   async function subirArchivo($event) {
 	for (const file of $event.target.files) {
