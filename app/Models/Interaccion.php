@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Interaccion extends Model
 {
     use HasFactory;
+
+    const UPDATED_AT = null;
+
+    protected $fillable = [
+        'publicacion_id',
+        'type', 
+        'user_id',
+    ];
 }

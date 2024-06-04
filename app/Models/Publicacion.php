@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Interaccion;
 
 class Publicacion extends Model
 {
@@ -23,5 +24,10 @@ class Publicacion extends Model
     public function attachments(): HasMany
     {
         return $this->hasMany(AdjuntoPublicacion::class);
+    }
+
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(Interaccion::class);
     }
 }

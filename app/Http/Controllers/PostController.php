@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\AdjuntoPublicacion;
+use App\Models\Interaccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -144,8 +145,42 @@ class PostController extends Controller
 
         if ($post->user_id === $id) {
             $post->delete();
+        } else {
+            abort(403, "No estás autorizado para realizar esta acción.");
         }
 
         return back();
+    }
+
+    public function reaction(Request $request, Publicacion $post)
+    {
+        $data = $request->validate([
+            'type' => 'required|in:like',
+        ]);
+
+        $userId = Auth::id();
+        $interaccion = Interaccion::where('user_id', $userId)
+            ->where('publicacion_id', $post->id)
+            ->where('type', $data['type'])
+            ->first();
+
+        if ($interaccion) {
+            $userReaction = false;
+            $interaccion->delete();
+        } else {
+            $userReaction = true;
+            Interaccion::create([
+                'publicacion_id' => $post->id,
+                'type' => $data['type'],
+                'user_id' => Auth::id(),
+            ]);
+        }
+
+        $interacciones = Interaccion::where('publicacion_id', $post->id)->count();
+
+        return response([
+            'reactions' => $interacciones,
+            'user_reaction' => $userReaction,
+        ]);
     }
 }
