@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function () {
 	Route::delete('/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
 	Route::post('/{post}/reaction', [PostController::class, 'reaction'])->name('post.reaction');
+	Route::post('/{post}/comment', [PostController::class, 'comment'])->name('post.comment');
 });

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Interaccion;
+use App\Models\AdjuntoPublicacion;
+use App\Models\Comentario;
 
 class Publicacion extends Model
 {
@@ -29,5 +31,10 @@ class Publicacion extends Model
     public function reactions(): HasMany
     {
         return $this->hasMany(Interaccion::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comentario::class);
     }
 }

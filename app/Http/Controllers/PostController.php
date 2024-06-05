@@ -6,7 +6,9 @@ use App\Models\Publicacion;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\AdjuntoPublicacion;
+use App\Models\Comentario;
 use App\Models\Interaccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -182,5 +184,21 @@ class PostController extends Controller
             'reactions' => $interacciones,
             'user_reaction' => $userReaction,
         ]);
+    }
+
+    public function comment(Request $request, Publicacion $post)
+    {
+        $data = $request->validate([
+            'comment' => 'required|string',
+        ]);
+
+        $comment = Comentario::create([
+            'publicacion_id' => $post->id,
+            'comment' => nl2br($data['comment']),
+            'user_id' => Auth::id(),
+        ]);
+
+        return response(new CommentResource($comment));
+            
     }
 }
