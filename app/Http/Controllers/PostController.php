@@ -201,4 +201,17 @@ class PostController extends Controller
         return response(new CommentResource($comment));
             
     }
+
+    public function deleteComment(Comentario $comment)
+    {
+        $id = Auth::id();
+
+        if ($comment->user_id === $id) {
+            $comment->delete();
+        } else {
+            abort(403, "No estás autorizado para realizar esta acción.");
+        }
+
+        return response(null, 204);
+    }
 }
