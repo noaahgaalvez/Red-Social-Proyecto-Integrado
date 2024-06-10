@@ -19,13 +19,13 @@ const props = defineProps({
 
 <template>
 	<div class="px-3 py-4 bg-white shadow rounded-md max-h-[450px] overflow-hidden flex flex-col">
-		<h2 class="text-2xl font-bold mb-4">Seguidos</h2>
+		<h2 class="text-2xl font-bold mb-4">Usuarios</h2>
 		<TextInput v-model="search" placeholder="Buscar Usuarios..." class="w-full" />
 
 		<div class="mt-3 flex-1 overflow-auto">
 			<div v-if="usuarios.length === 0"
 				class="text-gray-400 text-center p-3">
-				Aún no sigues a nadie
+				Aún no existen más usuarios
 			</div>
 			<div v-else>
 				<SeguidosItem v-for="usuario in searchUsers" :key="usuario.id" :usuario="usuario" class="mb-3" />

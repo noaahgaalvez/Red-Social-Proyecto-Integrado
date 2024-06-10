@@ -1,18 +1,23 @@
 <script setup>
 defineProps({
-	name: String,
-	image: String,
+	usuario: Object,
 });
 
 </script>
 
 <template>
-	<div class="mb-3 cursor-pointer hover:bg-gray-100">
-		<div class="flex items-center gap-2 py-2 px-2">
-			<img :src="image" class="2-[32px] rounded-full"/>
-			<div>
-				<h3 class="font-black">{{ name }}</h3>
-			</div>
-		</div>
-	</div>
+	<div class="flex items-center gap-2">
+        <a :href="route('profile', usuario.username)">
+            <img :src="usuario.avatar_url !== '/storage/' ? usuario.avatar_url : '/img/default_PerfilUsuario.jpg'"
+            class="w-[40px] rounded-full border border-2 transition-all hover:border-blue-500 aspect-square object-cover" />
+        </a>
+        <div>
+            <h4 class="font-bold">
+                <a :href="route('profile', usuario.username)"
+                class="hover:underline">
+                    {{ usuario.name }}
+                </a>
+            </h4>
+        </div>
+    </div>
 </template>

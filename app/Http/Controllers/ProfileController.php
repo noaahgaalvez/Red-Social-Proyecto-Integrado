@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Resources\PostResource;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\User;
 use App\Http\Resources\UserResource;
+use App\Models\Publicacion;
 use App\Models\Seguidor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,15 +27,31 @@ class ProfileController extends Controller
         if (!Auth::guest()) {
             $esSeguidor = Seguidor::where('user_id', $user->id)->where('follower_id', Auth::id())->exists();
         }
-           
+        
+        $postsUser = Publicacion::where('user_id', $user->id)->with('user', 'reactions', 'comments')->latest()->get();
+
+        $seguidores = User::query()
+        ->join('seguidors', 'users.id', '=', 'seguidors.follower_id')
+        ->where('seguidors.user_id', $user->id)
+        ->get();
         $numSeguidores = Seguidor::where('user_id', $user->id)->count();
+        
+        $seguidos = User::query()
+            ->join('seguidors', 'users.id', '=', 'seguidors.user_id')
+            ->where('seguidors.follower_id', $user->id)
+            ->get();
+        $numSeguidos = Seguidor::where('follower_id', $user->id)->count();
         
         return Inertia::render('Profile/View', [
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
             'success' => session('success'),
             'isFollower' => $esSeguidor,
+            'posts' => PostResource::collection($postsUser),
+            'followers' => UserResource::collection($seguidores),
             'numFollowers' => $numSeguidores,
+            'followings' => UserResource::collection($seguidos),
+            'numFollowing' => $numSeguidos,
             'user' => new UserResource($user),
         ]);
     }

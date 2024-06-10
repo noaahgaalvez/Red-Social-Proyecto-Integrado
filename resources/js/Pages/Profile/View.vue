@@ -34,7 +34,7 @@
           <div class="relative flex-1 p-4 flex justify-between items-center relative">
             <div>
               <h1 class="text-2xl font-bold">{{ props.user.name }}</h1>
-              <p class="text-gray-500 text-sm">{{ props.numFollowers }} seguidores</p>
+              <p class="text-gray-500 text-sm">{{ props.numFollowers }} seguidores - {{ props.numFollowing }} siguiendo</p>
             </div>
             
             <div v-if="!isMyProfile">
@@ -60,7 +60,7 @@
                 <TabItem :selected="selected" text="Seguidores" />
               </Tab>
               <Tab v-slot="{ selected }" as="template">
-                <TabItem :selected="selected" text="Siguiendo" />
+                <TabItem :selected="selected" text="Seguidos" />
               </Tab>
               <Tab v-if="isMyProfile" v-slot="{ selected }" as="template" >
                 <TabItem :selected="selected" text="Editar Perfil" />
@@ -73,21 +73,21 @@
                   'rounded-xl bg-white p-3 shadow',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
-                Publicaciones
+                <PublicacionList :posts="posts.data" />
               </TabPanel>
               <TabPanel
                 :class="[
                   'rounded-xl bg-white p-3 shadow',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
-                Seguidores
+                <SeguidoresList :usuarios="followers.data" />
               </TabPanel>
               <TabPanel
               :class="[
                   'rounded-xl bg-white p-3 shadow',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
-                Seguidos
+                <SeguidosList :usuarios="followings.data" />
               </TabPanel>
             </TabPanels>
             <TabPanel v-if="isMyProfile"
@@ -111,6 +111,9 @@
   import TabItem from '@/Components/TabItem.vue';
   import Edit from '@/Pages/Profile/Edit.vue';
   import { useForm } from '@inertiajs/vue3';
+  import PublicacionList from '@/Components/app/PublicacionList.vue';
+  import SeguidosList from '@/Components/app/SeguidosList.vue';
+  import SeguidoresList from '@/Components/app/SeguidoresList.vue';
 
   const imagesForm = useForm({
     portada : null,
@@ -133,7 +136,11 @@
         type: String,
     },
     isFollower: Boolean,
+    posts: Object,
+    followers: Object,
     numFollowers: Number,
+    followings: Object,
+    numFollowing: Number,
     user: {
       type: Object
     }
