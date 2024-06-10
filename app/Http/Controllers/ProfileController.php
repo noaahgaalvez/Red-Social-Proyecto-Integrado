@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\User;
 use App\Http\Resources\UserResource;
+use App\Models\Seguidor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,10 +20,20 @@ class ProfileController extends Controller
 {
     public function index(User $user)
     {
+        $esSeguidor = false;
+        
+        if (!Auth::guest()) {
+            $esSeguidor = Seguidor::where('user_id', $user->id)->where('follower_id', Auth::id())->exists();
+        }
+           
+        $numSeguidores = Seguidor::where('user_id', $user->id)->count();
+        
         return Inertia::render('Profile/View', [
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => session('status'),
             'success' => session('success'),
+            'isFollower' => $esSeguidor,
+            'numFollowers' => $numSeguidores,
             'user' => new UserResource($user),
         ]);
     }

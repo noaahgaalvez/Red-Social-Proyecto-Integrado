@@ -16,12 +16,12 @@ Route::get('/', [HomeController::class, 'index'])->middleware(['auth', 'verified
 Route::get('/{user:username}', [ProfileController::class, 'index'])->name('profile');
 
 Route::middleware('auth')->group(function () {
-	Route::post('/profile/actualizarImagen', [ProfileController::class, 'actualizarImagen'])
-		->name('profile.actualizarImagen');
-		
 	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+	Route::post('/profile/actualizarImagen', [ProfileController::class, 'actualizarImagen'])->name('profile.actualizarImagen');
 
+	Route::post('/user/seguir/{user}', [UserController::class, 'seguir'])->name('user.seguir');
+	
 	Route::post('/post', [PostController::class, 'store'])->name('post.create');
 	Route::put('/{post}', [PostController::class, 'update'])->name('post.update');
 	Route::delete('/{post}', [PostController::class, 'destroy'])->name('post.destroy');

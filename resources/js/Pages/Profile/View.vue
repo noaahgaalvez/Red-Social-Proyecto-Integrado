@@ -14,23 +14,39 @@
       <div class="group relative bg-white"> 
         <img :src="imgPortadaSrc || user.cover_url !== '/storage/' ? user.cover_url : '/img/default_PortadaUsuario.jpg'"
           class=" w-full h-[200px] object-cover">
-        <button class="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100">
-          Actualizar portada
-          <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0 cursor-pointer"
-                @change="actualizarPortada" />
-        </button>
+
+        <div v-if="isMyProfile">
+          <button class="absolute top-4 right-4 bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100">
+            Actualizar portada
+            <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0 cursor-pointer"
+                  @change="actualizarPortada" />
+          </button>
+          <button class="absolute top-14 right-4 bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100">
+            Actualizar foto de perfil
+            <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0 cursor-pointer"
+              @change="actualizarImagenPerfil" />
+          </button>
+        </div>
+
         <div class="flex">
           <img :src="imgPerfilSrc || user.avatar_url !== '/storage/' ? user.avatar_url : '/img/default_PerfilUsuario.jpg'"
               class="ml-[48px] w-[128px] h-[128px] -mt-[64px] rounded-full aspect-square object-cover">
           <div class="relative flex-1 p-4 flex justify-between items-center relative">
-              <h1 class="text-2xl font-bold">
-                {{ props.user.name }}
-              </h1>
-              <button class="absolute bg-blue-500 text-white px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100 absolute right-4">
-                Actualizar foto de perfil
-                <input type="file" class="absolute left-0 top-0 bottom-0 right-0 opacity-0 cursor-pointer"
-                      @change="actualizarImagenPerfil" />
+            <div>
+              <h1 class="text-2xl font-bold">{{ props.user.name }}</h1>
+              <p class="text-gray-500 text-sm">{{ props.numFollowers }} seguidores</p>
+            </div>
+            
+            <div v-if="!isMyProfile">
+              <button @click="seguirUsuario" v-if="!props.isFollower"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-500">
+                Seguir Usuario
               </button>
+              <button v-else @click="seguirUsuario"
+                class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-500">
+                Dejar de seguir
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -116,6 +132,8 @@
     status: {
         type: String,
     },
+    isFollower: Boolean,
+    numFollowers: Number,
     user: {
       type: Object
     }
@@ -166,6 +184,22 @@
         }
       });
     }
+  }
+
+  function seguirUsuario() {
+    const form = useForm({
+      follow: !props.isFollower
+    });
+
+    form.post(route('user.seguir', props.user.id), {
+      onSuccess: () => {
+        console.log('Usuario seguido');
+        showNotification.value = true;
+        setTimeout(() => {
+          showNotification.value = false;
+        }, 3000);
+      }
+    });
   }
   
   </script>
