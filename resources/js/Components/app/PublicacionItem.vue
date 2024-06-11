@@ -6,10 +6,12 @@
     import { ref } from 'vue';
     import { router, usePage } from '@inertiajs/vue3';
     import axiosClient from '@/axiosClient.js';
+    import { computed } from 'vue';
 
     const showDialog = ref(false);
 
     const authUser = usePage().props.auth.user;
+    const isMyProfile = computed(() => authUser && authUser.id === props.publicacion.user.id);
 
     const props = defineProps({
         publicacion: Object
@@ -82,7 +84,7 @@
                     </h4>
                 </div>
             </div>
-            <div>
+            <div v-if="isMyProfile">
                 <Menu as="div" class="relative z-10">
                     <MenuButton as="button" class="text-gray-400 hover:text-blue-500">
                         <ChevronDownIcon class="w-6 h-6" />
@@ -213,7 +215,7 @@
                                 </div>
                                 <div class="text-gray-400 text-sm flex gap-2 items-center">
                                     {{ comment.updated_at }}
-                                    <Menu as="div" class="relative z-10">
+                                    <Menu as="div" class="relative z-10" v-if="isMyProfile || comment.user.id === authUser.id">
                                         <MenuButton as="button" class="text-gray-400 hover:text-blue-500">
                                             <ChevronDownIcon class="w-6 h-6" />
                                         </MenuButton>

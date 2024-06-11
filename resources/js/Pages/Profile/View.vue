@@ -119,9 +119,9 @@
     portada : null,
     imagenPerfil : null
   });
-
-  const authUser = usePage().props.auth.user;
+  
   const showNotification = ref(true);
+  const authUser = usePage().props.auth.user;
   const isMyProfile = computed(() => authUser && authUser.id === props.user.id);
 
   const props = defineProps({
