@@ -12,10 +12,12 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/seguidos', [HomeController::class, 'seguidos'])->middleware(['auth', 'verified'])->name('seguidos');
 
 Route::get('/{user:username}', [ProfileController::class, 'index'])->name('profile');
 
 Route::middleware('auth')->group(function () {
+
 	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 	Route::post('/profile/actualizarImagen', [ProfileController::class, 'actualizarImagen'])->name('profile.actualizarImagen');
