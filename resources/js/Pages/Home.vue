@@ -24,7 +24,7 @@ defineProps({
 
             <div class="lg:col-span-9 lg:order-1 h-full overflow-hidden"> 
                 <CreatePublicacion />
-                <div class="p-4 bg-white shadow rounded-md flex gap-2 mb-3 text-center">
+                <div class="p-4 bg-white shadow rounded-md flex gap-2 mb-3 text-center dark:bg-gray-700">
                     <a :href="route('dashboard')" class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 relative">
                         Todas las publicaciones
                     </a>

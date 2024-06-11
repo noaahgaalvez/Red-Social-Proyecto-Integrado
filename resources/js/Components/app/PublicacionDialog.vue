@@ -28,11 +28,11 @@
 				  leave-to="opacity-0 scale-95"
 				>
 				  <DialogPanel
-					class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+					class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-gray-900 dark:text-gray-300"
 				  >
 					<DialogTitle
 					  as="h3"
-					  class="flex justify-between items-center text-lg font-medium leading-6 text-gray-900"
+					  class="flex justify-between items-center text-lg font-medium leading-6 text-gray-900 dark:text-gray-300"
 					>
 					  Actualizar Publicación
 					  <button class="text-gray-400 hover:text-blue-500" @click="closeModal">

@@ -65,7 +65,7 @@
 
 <template>
     <!-- Publicación -->
-    <div class="flex flex-col gap-4 p-4 bg-white shadow rounded-md mb-3">
+    <div class="flex flex-col gap-4 p-4 bg-white shadow rounded-md mb-3 dark:bg-gray-700 dark:text-gray-300">
         <!-- Usuario -->
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -88,7 +88,7 @@
                         <ChevronDownIcon class="w-6 h-6" />
                     </MenuButton>
 
-                    <MenuItems as="div" class="absolute right-0 w-40 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <MenuItems as="div" class="absolute right-0 w-40 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:divide-gray-700 dark:ring-gray-700">
                         <MenuItem as="button" class="w-full flex items-center gap-4 p-2 hover:bg-indigo-600 hover:text-white cursor-pointer"
                             @click="showDialog = true">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -147,7 +147,7 @@
             <div class="flex gap-10 justify-center w-full">
                 <button 
                     @click="enviarInteraccion('like')"
-                    class="flex gap-2 items-center text-gray-600 hover:text-blue-500 hover:bg-gray-100 p-2 rounded-md cursor-pointer"
+                    class="flex gap-2 items-center text-gray-600 hover:text-blue-500 hover:bg-gray-100 p-2 rounded-md cursor-pointer dark:text-gray-300 dark:hover:text-blue-500"
                     :class="[publicacion.user_reaction ? 'text-blue-500' : '']"
                 >
                     <svg v-if="publicacion.user_reaction" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
@@ -166,7 +166,7 @@
                 </button>
             
                 <DisclosureButton
-                    class="flex gap-2 items-center text-gray-600 hover:text-blue-500 hover:bg-gray-100 p-2 rounded-md cursor-pointer">
+                    class="flex gap-2 items-center text-gray-600 hover:text-blue-500 hover:bg-gray-100 p-2 rounded-md cursor-pointer dark:text-gray-300 dark:hover:text-blue-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                     </svg>
@@ -186,7 +186,8 @@
                             class="w-[40px] rounded-full border border-2 transition-all aspect-square object-cover" />
                         </a>
                         <div class="w-full flex gap-2">
-                            <textarea v-model="nuevoComentario" class="w-full p-2 border border-gray-300 rounded-md" placeholder="Escribe un comentario..."></textarea>
+                            <textarea v-model="nuevoComentario" class="w-full p-2 border border-gray-300 rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="Escribe un comentario..."></textarea>
                             <button @click="enviarComentario" type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                 Enviar Comentario
                             </button>
@@ -217,7 +218,7 @@
                                             <ChevronDownIcon class="w-6 h-6" />
                                         </MenuButton>
 
-                                        <MenuItems as="div" class="absolute right-0 w-40 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <MenuItems as="div" class="absolute right-0 w-40 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:divide-gray-700 dark:ring-gray-700">
                                             <MenuItem as="button" class="w-full flex items-center gap-4 p-2 hover:bg-indigo-600 hover:text-white cursor-pointer"
                                                 @click="deleteComment(comment)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">

@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="px-3 py-4 bg-white shadow rounded-md max-h-[450px] overflow-hidden flex flex-col">
+	<div class="px-3 py-4 bg-white shadow rounded-md max-h-[450px] overflow-hidden flex flex-col dark:bg-gray-700 dark:text-gray-200">
 		<h2 class="text-2xl font-bold mb-4">Usuarios</h2>
 		<TextInput v-model="search" placeholder="Buscar Usuarios..." class="w-full" />
 

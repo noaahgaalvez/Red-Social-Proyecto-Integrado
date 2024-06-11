@@ -69,7 +69,7 @@ function esImagen(attachment) {
 </script>
 
 <template>
-    <div class="p-4 bg-white shadow rounded-md flex flex-col gap-2 mb-3">
+    <div class="p-4 bg-white shadow rounded-md flex flex-col gap-2 mb-3 dark:bg-gray-700">
         <textarea @click="crearPublicacion = true" class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
             placeholder="Pulsa aquí para crear una publicación" v-model="nuevaPublicacionForm.body">
         </textarea>

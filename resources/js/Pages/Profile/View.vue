@@ -11,7 +11,7 @@
           {{ errors.cover }}
       </div>
 
-      <div class="group relative bg-white"> 
+      <div class="group relative bg-white dark:bg-gray-700 dark:text-gray-200">
         <img :src="imgPortadaSrc || user.cover_url !== '/storage/' ? user.cover_url : '/img/default_PortadaUsuario.jpg'"
           class=" w-full h-[200px] object-cover">
 
@@ -34,7 +34,7 @@
           <div class="relative flex-1 p-4 flex justify-between items-center relative">
             <div>
               <h1 class="text-2xl font-bold">{{ props.user.name }}</h1>
-              <p class="text-gray-500 text-sm">{{ props.numFollowers }} seguidores - {{ props.numFollowing }} siguiendo</p>
+              <p class="text-gray-500 dark:text-gray-400 text-sm">{{ props.numFollowers }} seguidores - {{ props.numFollowing }} siguiendo</p>
             </div>
             
             <div v-if="!isMyProfile">
@@ -70,21 +70,21 @@
             <TabPanels class="mt-2">
               <TabPanel
               :class="[
-                  'rounded-xl bg-white p-3 shadow',
+                  'rounded-xl bg-white p-3 shadow dark:bg-gray-800',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
                 <PublicacionList :posts="posts.data" />
               </TabPanel>
               <TabPanel
                 :class="[
-                  'rounded-xl bg-white p-3 shadow',
+                  'rounded-xl bg-white p-3 shadow dark:bg-gray-700',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
                 <SeguidoresList :usuarios="followers.data" />
               </TabPanel>
               <TabPanel
               :class="[
-                  'rounded-xl bg-white p-3 shadow',
+                  'rounded-xl bg-white p-3 shadow dark:bg-gray-700',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
                 <SeguidosList :usuarios="followings.data" />
@@ -92,7 +92,7 @@
             </TabPanels>
             <TabPanel v-if="isMyProfile"
               :class="[
-                'rounded-xl bg-white p-3 shadow',
+                'rounded-xl bg-white p-3 shadow dark:bg-gray-700',
                 'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
               ]">
               <Edit :must-verify-email="mustVerifyEmail" :status="status" />
