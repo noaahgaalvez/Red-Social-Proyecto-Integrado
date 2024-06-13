@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('publicacion_id')->constrained('publicacions');
             $table->string('name', 255);
             $table->string('path', 255);
-            $table->string('type', 25);
+            $table->string('image', 25);
             $table->foreignId('created_by')->constrained('users');
             $table->timestamp('created_at')->nullable();
         });
