@@ -1,6 +1,5 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import SeguidosList from '@/Components/app/SeguidosList.vue';
 import CreatePublicacion from '@/Components/app/CreatePublicacion.vue';
 import PublicacionList from '@/Components/app/PublicacionList.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';

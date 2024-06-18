@@ -2,6 +2,7 @@
   <AuthenticatedLayout>
     <div class="container mx-auto h-full overflow-auto">
 
+      <!-- Notificaciones -->
       <div v-show="showNotification && props.success"
           class="my-2 py-2 px-3 font-medium text-sm bg-emerald-500 text-white">
           {{ success }}
@@ -11,6 +12,7 @@
           {{ errors.cover }}
       </div>
 
+      <!-- Imágenes e información de usuario -->
       <div class="group relative bg-white dark:bg-gray-700 dark:text-gray-200">
         <img :src="imgPortadaSrc || user.cover_url !== '/storage/' ? user.cover_url : '/img/default_PortadaUsuario.jpg'"
           class=" w-full h-[200px] object-cover">
@@ -37,6 +39,7 @@
               <p class="text-gray-500 dark:text-gray-400 text-sm">{{ props.numFollowers }} seguidores - {{ props.numFollowing }} siguiendo</p>
             </div>
             
+            <!-- Botón de seguir usuario -->
             <div v-if="!isMyProfile">
               <button @click="seguirUsuario" v-if="!props.isFollower"
                 class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-500">
@@ -50,6 +53,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Tabs -->
         <div class="py-16 sm:px-0">
           <TabGroup>
             <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
